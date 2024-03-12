@@ -7,6 +7,7 @@ using GSheetTelegramBot.Web.Interfaces;
 using GSheetTelegramBot.Web.Services;
 using Hangfire;
 using Hangfire.SqlServer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 
 namespace GSheetTelegramBot.Web;
@@ -83,10 +84,15 @@ public class Program
 
     private static void ConfigureHttpPipeline(WebApplication app)
     {
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+        });
+
         app.UseSwagger();
         app.UseSwaggerUI();
 
-        app.UseHttpsRedirection();
+        //app.UseHttpsRedirection();
         app.UseAuthorization();
         app.MapControllers();
 
