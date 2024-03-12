@@ -14,8 +14,10 @@ services:
       - gsheettelegrambotapp
   
   gsheettelegrambot.web:
+    env_file: 
+      - .env
     container_name: gsheet-telegrambot-web
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    image: valeriynashchokin/gsheettelegrambotweb:latest
     build:
       context: .
       dockerfile: GSheetTelegramBot.Web/Dockerfile
