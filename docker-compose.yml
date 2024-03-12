@@ -7,6 +7,8 @@ services:
   gsheettelegrambot.db:
     container_name: gsheet-telegrambot-db
     image: mcr.microsoft.com/mssql/server:2019-latest 
+    volumes:
+      - ./mssqldb:/var/opt/mssql
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=${DB_SA_PASSWORD} 
