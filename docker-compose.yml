@@ -6,17 +6,16 @@ networks:
 services:
   gsheettelegrambot.db:
     container_name: gsheet-telegrambot-db
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    ports:
-      - 8002:143
+    image: mcr.microsoft.com/mssql/server:2019-latest 
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=password@12345#
+      - SA_PASSWORD=${DB_SA_PASSWORD} 
     networks:
       - gsheettelegrambotapp
+  
   gsheettelegrambot.web:
     container_name: gsheet-telegrambot-web
-    image: ${DOCKER_REGISTRY-}gsheettelegrambotweb
+    image: mcr.microsoft.com/mssql/server:2019-latest
     build:
       context: .
       dockerfile: GSheetTelegramBot.Web/Dockerfile
@@ -27,7 +26,5 @@ services:
     environment:
       - DB_HOST=gsheettelegrambot.db
       - DB_NAME=GsheetTelegramBotDB
-      - DB_SA_PASSWORD=password@12345#
-      - WEB_SERVER_URL=https://myapp.example.com
     networks:
       - gsheettelegrambotapp
